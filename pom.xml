@@ -62,6 +62,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>technical-test</finalName>
 	</build>
 
 </project>

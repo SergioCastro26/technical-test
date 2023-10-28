@@ -7,6 +7,7 @@ import com.microservice.technicaltest.service.BillService;
 import com.microservice.technicaltest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class BillController {
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<String> createBill(@RequestBody Bill bill, @PathVariable("userId") Long userId) {
+    public ResponseEntity<String> createBill(@Validated @RequestBody Bill bill, @PathVariable("userId") Long userId) {
         User user = userService.getUser(userId).orElse(null);
         if (user != null) {
             bill.setUser(user);
@@ -50,7 +51,7 @@ public class BillController {
     }
 
     @PutMapping("/edit/{billId}")
-    public Bill updatedBill(@PathVariable("billId") Long billId, @RequestBody Bill bill) {
+    public Bill updatedBill(@Validated @PathVariable("billId") Long billId, @RequestBody Bill bill) {
       Bill updatedBill  = billRepository.findById(billId).get();
       updatedBill.totalAmount = bill.totalAmount;
       updatedBill.desc = bill.desc;
