@@ -10,8 +10,10 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idBill;
 
+    @Column(nullable = false)
     public Double totalAmount;
 
+    @Column(nullable = false)
     public String desc;
 
     @ManyToOne

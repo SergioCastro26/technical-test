@@ -7,6 +7,7 @@ import com.microservice.technicaltest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,12 +32,12 @@ public class UserController {
     }
 
     @PostMapping
-    public User save(@RequestBody User user){
+    public User save(@Validated @RequestBody User user){
         return userService.saveOrUpdate(user);
     }
 
     @PostMapping("edit/{userId}")
-    public User update(@RequestBody User user, @PathVariable Long userId){
+    public User update(@Validated @RequestBody User user, @PathVariable Long userId){
         user.idUser = userId;
         return userService.saveOrUpdate(user);
     }
@@ -52,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/bills/{billId}")
-    public ResponseEntity<String> saveOrUpdateBill(@PathVariable("userId") Long userId, @PathVariable("billId") Long billId, @RequestBody Bill bill) {
+    public ResponseEntity<String> saveOrUpdateBill(@Validated @PathVariable("userId") Long userId, @PathVariable("billId") Long billId, @RequestBody Bill bill) {
         String message;
         Bill updatedBill = billService.updateBillForUser(userId, billId, bill);
         if (updatedBill != null) {
